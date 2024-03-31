@@ -1,0 +1,339 @@
+import "./styles.css";
+
+import { useState } from "react";
+
+const App = () => {
+  const arr = ["play games", "read book", "play chess"];
+  const [arr1, setArr1] = useState(arr);
+  const handleDelete = (idx) => {
+    setArr1(arr1.filter((item, i) => i !== idx));
+  };
+  return (
+    <>
+      {arr1.map((item, idx) => (
+        <List onDelete={() => handleDelete(idx)} item={item} />
+      ))}
+    </>
+  );
+};
+
+export default App;
+
+const List = ({ onDelete, item }) => {
+  const [checked, isChecked] = useState(false);
+
+  return (
+    <div style={{ display: "flex" }}>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => isChecked(e.target.checked)}
+      />
+      {item}
+      {checked && <button onClick={onDelete}>X</button>}
+    </div>
+  );
+};
+
+import React, { useState } from "react";
+
+function CheckboxGroup() {
+  const [checkboxes, setCheckboxes] = useState([
+    { id: 1, isChecked: false },
+    { id: 2, isChecked: false },
+    { id: 3, isChecked: false },
+    { id: 4, isChecked: false },
+  ]);
+
+  const handleCheckboxChange = (id) => {
+    const updatedCheckboxes = checkboxes.map((checkbox) =>
+      checkbox.id === id
+        ? { ...checkbox, isChecked: !checkbox.isChecked }
+        : checkbox
+    );
+    setCheckboxes(updatedCheckboxes);
+  };
+
+  const handleSelectAllChange = () => {
+    const allChecked = checkboxes.every((checkbox) => checkbox.isChecked);
+    const updatedCheckboxes = checkboxes.map((checkbox) => ({
+      ...checkbox,
+      isChecked: !allChecked,
+    }));
+    setCheckboxes(updatedCheckboxes);
+  };
+
+  return (
+    <div>
+      <label>
+        <input
+          type="checkbox"
+          checked={checkboxes.every((checkbox) => checkbox.isChecked)}
+          onChange={handleSelectAllChange}
+        />
+        Select All
+      </label>
+      <br />
+      {checkboxes.map((checkbox) => (
+        <div key={checkbox.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={checkbox.isChecked}
+              onChange={() => handleCheckboxChange(checkbox.id)}
+            />
+            Checkbox {checkbox.id}
+          </label>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default CheckboxGroup;
+
+
+import React, { useState } from "react";
+
+function CheckboxGroup() {
+  const [isChecked, setIsChecked] = useState([
+    {
+      id1: false,
+      id2: false,
+      id3: false,
+      id4: false,
+    },
+  ]);
+  return (
+    <div>
+      <input
+        type="checkbox"
+        id="checkbox-1"
+        checked={
+          isChecked.id1 && isChecked.id2 && isChecked.id3 && isChecked.id4
+        }
+        onChange={() =>
+          setIsChecked({
+            ...isChecked,
+            id1: !isChecked.id1,
+            id2: !isChecked.id2,
+            id3: !isChecked.id3,
+            id4: !isChecked.id4,
+          })
+        }
+      />
+      <label htmlFor="checkbox-1">Checkbox </label>
+
+      <div>
+        <input
+          type="checkbox"
+          id="checkbox-2"
+          checked={isChecked.id1}
+          onChange={() =>
+            setIsChecked({
+              ...isChecked,
+              id1: !isChecked.id1,
+            })
+          }
+        />
+        <label htmlFor="checkbox-2">Checkbox </label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="checkbox-3"
+          checked={isChecked.id2}
+          onChange={() =>
+            setIsChecked({
+              ...isChecked,
+              id2: !isChecked.id2,
+            })
+          }
+        />
+        <label htmlFor="checkbox-3">Checkbox </label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="checkbox-4"
+          checked={isChecked.id3}
+          onChange={() =>
+            setIsChecked({
+              ...isChecked,
+              id3: !isChecked.id3,
+            })
+          }
+        />
+        <label htmlFor="checkbox-4">Checkbox </label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="checkbox-5"
+          checked={isChecked.id4}
+          onChange={() =>
+            setIsChecked({
+              ...isChecked,
+              id4: !isChecked.id4,
+            })
+          }
+        />
+        <label htmlFor="checkbox-5">Checkbox </label>
+      </div>
+    </div>
+  );
+}
+
+export default CheckboxGroup;
+
+import React, { useState } from "react";
+
+function SearchFilter() {
+  const [items, setItems] = useState([
+    "Apple",
+    "Banana",
+    "Orange",
+    "Grapes",
+    "Mango",
+    "Pineapple",
+  ]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredItems = items.filter((item) =>
+    item.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div>
+      <h2>Search Filter</h2>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="Search..."
+      />
+      <ul>
+        {filteredItems.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default SearchFilter;
+
+import { useState } from "react";
+import "./styles.css";
+
+export default function App() {
+  return (
+    <div className="App">
+      <Counter />
+    </div>
+  );
+}
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  const [step, setStep] = useState(1);
+
+  function handleReset() {
+    setCount(0);
+    setStep(1);
+  }
+
+  const date = new Date("june 21 2027");
+  date.setDate(date.getDate() + count);
+
+  return (
+    <div>
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={step}
+          onChange={(e) => setStep(Number(e.target.value))}
+        />
+        <span>Step: {step}</span>
+      </div>
+
+      <div>
+        <button onClick={() => setCount((c) => c - step)}>-</button>
+        <input
+          type="text"
+          value={count}
+          onChange={(e) => setCount(Number(e.target.value))}
+        />
+        <button onClick={() => setCount((c) => c + step)}>+</button>
+      </div>
+
+      <p>
+        <span>
+          {count === 0
+            ? "Today is  "
+            : count > 0
+            ? `${count} days from today is `
+            : `${Math.abs(count)} days ago was `}
+        </span>
+        <span>{date.toDateString()}</span>
+      </p>
+
+      {count !== 0 || step !== 1 ? (
+        <div>
+          <button onClick={handleReset}>Reset</button>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+
+import React, { useState } from "react";
+
+function App() {
+  const options = ["Option 1", "Option 2", "Option 3"];
+
+  return (
+    <div className="App">
+      <h1>Dropdown Menu Example</h1>
+      <DropdownMenu options={options} />
+    </div>
+  );
+}
+
+function DropdownMenu({ options }) {
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  return (
+    <div className="dropdown">
+      <select value={selectedOption} onChange={handleOptionChange}>
+        <option value="">Select an Option</option>
+        {options.map((option, index) => (
+          <option key={index} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+
